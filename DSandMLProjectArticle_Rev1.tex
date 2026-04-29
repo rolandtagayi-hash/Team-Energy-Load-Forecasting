@@ -1,0 +1,437 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+%\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{algorithm}
+\usepackage[utf8]{inputenc}
+\usepackage{epstopdf}
+\usepackage{caption}
+\usepackage{subcaption}
+\captionsetup[figure]{name={Fig.}, labelsep=period}
+\captionsetup[subfigure]{labelfont=normalfont,textfont=normalfont}
+%\usepackage{float}
+\usepackage{amsmath, amssymb, mathtools}
+\usepackage{siunitx}
+\usepackage{booktabs, array, tabularx, multirow}
+\usepackage{balance}
+\usepackage{url}
+\usepackage{enumitem}
+\usepackage[font=footnotesize,labelfont=bf]{subcaption}
+\usepackage{listings}
+\usepackage{algpseudocode}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning, calc, shapes, fit, decorations.pathmorphing, patterns, shapes.geometric, shapes.misc, backgrounds}
+\usepackage{circuitikz}
+\usepackage{xcolor}
+\usepackage{microtype}
+\usepackage{physics}
+\usepackage{bm}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+\usepackage{cleveref}
+
+\usepackage{soul} %d\for highlight \hl{}
+
+% ---------- SI units ----------
+\sisetup{per-mode=symbol}
+%\DeclareSIUnit{\Ah}{Ah}
+
+%\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+%    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+    
+\begin{document}
+
+\title{Short-Term Load Forecasting for U.S. Power Systems: A Unified Comparative Framework for Multi-Paradigm Machine Learning Evaluation with Weather-Integrated Features}
+
+\author{\IEEEauthorblockN{Esther Omoyiwola}
+\IEEEauthorblockA{\textit{Electrical and Computer Engineering} \\
+\textit{Georgia Southern University}\\
+Statesboro, Georgia \\
+eo03837@georgiasouthern.edu}
+\and
+\IEEEauthorblockN{Roland Kobla Tagayi}
+\IEEEauthorblockA{\textit{Electrical and Computer Engineering} \\
+\textit{Georgia Southern University}\\
+Statesboro, Georgia \\
+rolandtagayi@gmail.com}
+\and
+\IEEEauthorblockN{Yvonne Okafor}
+\IEEEauthorblockA{\textit{Computer Science} \\
+\textit{Georgia Southern University}\\
+Statesboro, Georgia \\
+yo00569@georgiasouthern.edu}
+\and
+\IEEEauthorblockN{Akinfenwa Ayobami}
+\IEEEauthorblockA{\textit{Mechanical Engineering} \\
+\textit{Georgia Southern University}\\
+Statesboro, Georgia \\
+akinfenwaas@gmail.com}
+}
+
+\maketitle
+
+\begin{abstract}
+
+Short-term electricity load forecasting (STLF) is essential for reliable grid operation, economic dispatch, and energy management in modern power systems characterized by renewable integration and climate-driven variability. Over the past decades, forecasting methodologies have evolved from traditional statistical techniques to machine learning and deep learning architectures. However, inconsistencies in benchmarking practices, preprocessing pipelines, and weather feature integration limit the interpretability and comparability of reported results. This study presents a structured literature review and proposes a unified comparative evaluation framework for short-term electricity load forecasting. The review synthesizes traditional statistical models, machine learning approaches, and deep learning architectures, with particular emphasis on the integration of meteorological variables. Furthermore, the study highlights the need for systematic weather impact sensitivity analysis to quantify the marginal contribution of environmental features to predictive performance across model classes.
+
+By identifying methodological gaps and inconsistencies in existing studies, this work establishes a reproducible foundation for fair model comparison and weather-aware forecasting design. The proposed framework aims to bridge model performance evaluation with environmental dependency analysis, contributing toward more robust and practically applicable load forecasting systems.
+
+\end{abstract}
+\begin{IEEEkeywords}
+Short-term electricity load forecasting, machine learning, data science, time-series analysis
+\end{IEEEkeywords}
+
+\section{Introduction}
+\IEEEPARstart{A}{ccurate} short-term electricity load forecasting (STLF) is a foundational requirement for modern power system operation. In electricity markets and vertically integrated utilities alike, reliable load prediction enables efficient unit commitment, economic dispatch, reserve allocation, and real-time balancing. Inaccurate forecasts can lead to over-generation, increasing operational costs, or under-generation, risking system instability and service interruptions. With increasing penetration of renewable energy sources and demand-side variability, the forecasting problem has become more complex, nonlinear, and weather-sensitive.
+
+Over the past decades, forecasting methodologies have evolved from traditional statistical techniques such as autoregressive integrated moving
+average (ARIMA) and seasonal autoregressive integrated moving average (SARIMA) to machine learning (ML) models and, more recently, deep learning (DL) architectures, including recurrent neural networks (RNNs) and long short-term memory (LSTM) networks. While these approaches demonstrate promising accuracy improvements, the literature reveals inconsistencies in benchmarking practices, feature engineering pipelines, and evaluation metrics. Moreover, although meteorological variables are commonly incorporated into forecasting models, limited studies systematically analyze the sensitivity and marginal impact of weather features across different modeling paradigms.
+
+This research aims to provide a structured and critical synthesis of forecasting methodologies relevant to short-term electricity load prediction. The scope of this review includes traditional statistical models, machine learning-based approaches, deep learning architectures, and studies integrating weather variables into forecasting frameworks. Particular emphasis is placed on identifying research gaps related to unified model comparison and structured weather impact analysis, which form the foundation of the proposed study.
+
+\section{Literature Review: A Systematic View of Weather-Aware Short-Term Load Forecasting}
+Research studies on short-term load forecasting (STLF) have expanded rapidly as power systems have become more variable, data-rich, and weather-sensitive. Across the studies reviewed, four broad themes consistently emerge: the operational importance of load forecasting, the role and limits of traditional statistical methods, the rise of machine learning-based forecasting, and the growing influence of deep learning for nonlinear and high-dimensional demand patterns. A careful synthesis of these themes shows that the field has moved steadily from interpretable but rigid forecasting models toward more flexible data-driven approaches. At the same time, the review also reveals an important unresolved issue: improvements in forecast accuracy are often reported under inconsistent datasets, preprocessing choices, and weather-feature designs, making fair comparison difficult \cite{10630814,10320357,vivas2020,Eren}.
+
+\subsection{Overview of Load Forecasting, Its Applications, and Motivation}
+Short-term load forecasting remains one of the most important analytical tasks in modern power systems because it supports economic dispatch, unit commitment, reserve allocation, market operation, and real-time system balancing. As utilities incorporate more renewable generation, electrified end uses, and responsive demand, the forecasting problem becomes more dynamic and more sensitive to forecasting errors. Several review studies emphasize that forecasting accuracy is no longer only a matter of operational efficiency; it is now closely tied to grid reliability, market stability, and energy management under uncertainty \cite{10630814,10320357,hammad2020,habbak2023}. 
+
+The reviewed literature also shows that electricity demand is shaped by multiple interacting factors rather than by load history alone. Time-of-day, weekday and holiday effects, seasonal cycles, price signals, and especially meteorological conditions all affect short-horizon demand. Mustafa et al. present load forecasting as part of a broader energy-management problem in which load, price, and system behavior are increasingly interdependent \cite{10320357}. Likewise, Ullah et al. show that the motivation for recent forecasting research is closely linked to renewable integration, demand volatility, and the need for models that can learn both temporal and external dependencies \cite{10630814}. Pinheiro et al. further reinforce the operational relevance of STLF by showing that forecasting must remain useful across multiple network scales, from system-level demand down to secondary substations, where load behavior becomes more localized and potentially more irregular \cite{Pinheiro}. 
+
+A consistent concept across the literature is that STLF should not be treated as a purely mathematical prediction task. It is an applied power-systems problem in which the value of a model depends not only on predictive accuracy but also on robustness, reproducibility, computational cost, and its ability to accommodate weather-driven variability. This practical orientation explains why recent studies increasingly compare model families rather than evaluating a single method in isolation \cite{10630814,10320357,hammad2020}.
+
+\subsection{Traditional Statistical Methods and Weather-Related Modeling Insights}
+Traditional statistical methods such as linear regression, autoregressive (AR), moving average (MA), autoregressive moving average (ARMA), ARIMA, and SARIMA laid the foundation for early load forecasting research because they are mathematically transparent, relatively inexpensive to implement, and effective when demand follows a stable trend and seasonal structures \cite{hammad2020,vivas2020}. These methods remain important as benchmarks, and in some cases, they are still useful when the forecasting horizon is structured and the demand pattern is relatively smooth. However, the reviewed literature shows a clear limitation: their underlying assumptions make it difficult to represent abrupt load shifts, nonlinear temperature effects, and changing consumer behavior \cite{8614252,Tarmanini,hammad2020}.
+
+The transition away from purely statistical models is especially visible in studies that examine weather-sensitive demand. Weather variables are widely recognized as critical STLF inputs, but the literature shows that simply adding temperature or humidity is not enough. What matters is how those weather variables are represented. Mansouri et al. address this directly by proposing a weather-sensitive forecasting framework based on dynamic mode decomposition with control (DMDc), where weather is treated as an exogenous forcing signal rather than a secondary variable appended to the model \cite{Mansouri}. Their results suggest that careful treatment of weather information can improve forecasting accuracy while preserving some of the interpretability associated with structured dynamic models. Pinheiro et al. similarly show that weather and calendar effects remain essential even in systematic, operational forecasting workflows, particularly when the goal is to maintain consistency across grid levels \cite{Pinheiro}.
+
+Comparative studies further illustrate where classical models become less effective. Tarmanini et al. compare ARIMA and artificial neural network (ANN)-based forecasting and show that linear statistical baselines can remain competitive when patterns are stable, but their performance deteriorates when demand becomes more nonlinear or weather-sensitive \cite{Tarmanini}. More broadly, Siami-Namini et al. show that long short-term memory (LSTM) models generally outperform ARIMA when the underlying time series contains nonlinear structure and long-range dependence, which is highly relevant to load forecasting, even though their analysis is not limited to electricity demand \cite{8614252}. These findings align with survey evidence showing that traditional models still have value as interpretable references, but they are less suited to modern STLF settings characterized by non-stationarity and complex exogenous influences \cite{vivas2020,hammad2020}.
+
+Another important insight from the previous studies is that weather-load relationships are rarely linear. Cooling and heating demand often respond asymmetrically to temperature extremes, and the effect of humidity, dew point, or apparent temperature can be more informative than raw temperature alone \cite{Mansouri,Chen}. This means that weather-aware forecasting requires both relevant variables and a model class capable of learning nonlinear dependence. That observation forms an important bridge from classical statistical forecasting to machine learning-based approaches.
+
+\subsection{Machine Learning-Based Forecasting}
+Machine learning methods were introduced into load forecasting largely to overcome the rigidity of classical statistical models. Across the reviewed studies, algorithms such as support vector regression (SVR), random forest (RF), gradient boosting, XGBoost, least-squares support vector machines, and other ensemble approaches are repeatedly reported as strong alternatives for STLF because they can capture nonlinear interactions among lagged load, weather, and calendar variables without relying on strong assumptions about the data \cite{vivas2020,azeem2021,habbak2023,zhang2021,wazirali2023}. 
+
+Several systematic reviews support this transition. Vivas et al. show that machine learning models frequently outperform statistical methods in studies reporting mean absolute percentage error (MAPE), especially when exogenous variables are included \cite{vivas2020}. Habbak et al. and Azeem et al. similarly note that smart-grid forecasting has increasingly favored artificial intelligence (AI)-based and ensemble methods because of their stronger ability to model nonlinear demand patterns and heterogeneous operating conditions \cite{habbak2023,azeem2021}. Zhang et al., focusing on building load prediction, also report that tree-based and boosting-based methods often provide an attractive balance between predictive power and practical interpretability, especially when historical load, meteorological variables, and engineered temporal features are used together \cite{zhang2021}. 
+
+Within this group, SVR is often treated as a solid nonlinear benchmark, particularly for moderate-sized datasets and carefully engineered input spaces. However, its performance tends to weaken as data volume and volatility increase \cite{khalil2022,zhang2021}. Random forest performs more robustly and offers feature-importance measures that are useful in operational settings, but it is frequently surpassed by boosting-based models when fine-grained error reduction is the main objective \cite{zhang2021,habbak2023}. Gradient boosting and related ensemble methods are therefore among the strongest machine learning candidates for STLF, especially when the dataset includes well-structured weather, lag, and calendar information \cite{azeem2021,habbak2023}. 
+
+Hybrid machine learning approaches form another important part of the literature. Xiong et al. combine fuzzy c-means clustering with whale-optimization-assisted least squares support vector machine (LSSVM) to improve forecasting stability under electricity market variability, showing how clustering and metaheuristic optimization can be used to strengthen conventional learners \cite{10062299}. Similar patterns appear in review studies, where performance gains are often attributed not just to the predictive model itself but to preprocessing choices such as clustering, feature selection, decomposition, normalization, and lag construction \cite{vivas2020,azeem2021,khalil2022}. In other words, machine learning success in STLF often depends on the quality of the forecasting approach rather than on the algorithm name alone.
+
+At the same time, the literature makes clear that machine learning-based forecasting still faces important limitations. Many reported improvements are dataset-specific, and benchmarking practices vary considerably across studies. Differences in temporal resolution, forecasting horizon, weather-feature availability, training and testing splits, and evaluation metrics make it difficult to conclude that one machine learning model is universally superior \cite{vivas2020,khalil2022,zhang2021}. This is one of the clearest gaps identified in the reviewed literature and strongly supports the need for a unified comparative framework.
+
+\begin{table*}[!htbp]
+\caption{Comparative Synthesis of ML Model Suitability in Power Load Forecasting}
+\label{tab:model_synthesis}
+\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|p{2.5cm}|p{2.2cm}|p{3.2cm}|p{3cm}|p{3cm}|p{1.5cm}|}
+\hline
+\textbf{Model Category} &
+\textbf{Suitable Forecasting Horizon} &
+\textbf{Dataset Characteristics} &
+\textbf{Strengths} &
+\textbf{Limitations} &
+\textbf{Key Refs} \\
+\hline
+
+Regression-Based Models &
+Long-Term Load Forecasting (LTLF) &
+Aggregated demand; smoother seasonal/economic trends; limited nonlinear volatility &
+High interpretability; low computational cost; stable for coarse temporal granularity &
+Poor handling of nonlinear weather-load interactions; weak STLF performance &
+\cite{zhang2021,wazirali2023} \\
+\hline
+
+Support Vector Regression (SVR) &
+Short-Term Load Forecasting (STLF) &
+Moderate-sized datasets; engineered nonlinear features &
+Strong nonlinear modeling; stable under limited training data &
+Scalability issues; performance declines in large or volatile datasets; often outperformed by ensembles &
+\cite{azeem2021,zhang2021} \\
+\hline
+
+Random Forest (RF) &
+STLF and Medium-Term LF &
+Medium-scale datasets; structured meteorological and lagged features &
+Robust to overfitting; interpretable via feature importance; consistent performance &
+May be surpassed by boosting models in fine-grained error optimization &
+\cite{vivas2020,zhang2021} \\
+\hline
+
+Boosting Models (e.g., Gradient Boosting) &
+Primarily STLF &
+Large datasets; structured exogenous predictors (weather, calendar effects) &
+High predictive accuracy; strong nonlinear and high-order interaction modeling &
+Hyperparameter sensitivity; reduced interpretability; reproducibility challenges &
+\cite{habbak2023,wazirali2023} \\
+\hline
+
+Hybrid ML Approaches & 
+STLF (complex/volatile environments) &
+High-resolution, volatile, or renewable-integrated datasets &
+Improved accuracy through preprocessing, decomposition, and optimization integration &
+Dataset-specific gains; weak external validation; reduced transparency &
+\cite{vivas2020,azeem2021} \\
+\hline
+
+\end{tabular}
+\end{table*}
+
+
+
+\subsection{Deep Learning Approaches}
+Deep learning has become the most prominent research direction in recent STLF studies because of its ability to learn hierarchical and nonlinear representations directly from sequential data. Architectures such as recurrent neural networks (RNNs), LSTMs, gated recurrent units (GRUs), convolutional neural networks (CNNs), and hybrid CNN-LSTM models are now widely used for electricity demand forecasting \cite{bedi2019deep,10630814,Eren,ugbehe2025}. Their main appeal lies in their ability to capture long-range temporal dependencies, complex cross-feature interactions, and high-dimensional patterns that simpler models may miss.
+
+LSTM-based forecasting is especially well represented in the reviewed literature. Ullah et al. report that CNN-LSTM hybrids perform strongly because CNN layers can extract spatial or local temporal features while LSTM layers model sequential dependence over time \cite{10630814}. Chen et al. extend this idea with a ResNet-LSTM architecture that integrates load with multiple weather-related variables, including temperature, humidity, dew point, and price, and they show strong performance across several short-term horizons \cite{Chen}. Their work is particularly relevant because it does not treat weather as a minor auxiliary input; instead, weather-related variables are embedded directly into the forecasting structure, and the study even considers associated weather prediction when such inputs are unavailable. This reflects a broader shift in the literature toward coupled forecasting settings in which weather and load are modeled as deeply linked processes.
+
+Recent review studies further confirm the rapid rise of deep learning in STLF. Eren et al. show that deep learning models have become dominant in recent high-performance forecasting studies, particularly where nonlinear relationships and multivariate inputs are strong \cite{Eren}. Ugbehe et al. also note that ANN, CNN, LSTM, GRU, and hybrid architectures now occupy a central place in electricity demand forecasting because of their flexibility and ability to handle complex demand patterns \cite{ugbehe2025}. Bedi and Toshniwal demonstrate that deep learning frameworks can significantly improve electricity-demand prediction by learning both short-term and long-term structures directly from load data \cite{bedi2019deep}. Zhao et al. also point to newer hybrid architectures such as CNN-Bi-GRU for renewable electricity-demand forecasting, suggesting that deep learning development is continuing toward more specialized multi-stage architectures \cite{zhao2025short}.
+
+Despite these advantages, the literature does not present deep learning as a complete solution. Deep learning models usually require larger datasets, more extensive hyperparameter tuning, and greater computational resources than traditional or shallow machine learning methods \cite{10630814,Eren,bedi2019deep}. The models can also be difficult to interpret, which matters in power-system applications where operators often need to understand why a forecast changes. Pallonetto et al. highlight a practical nuance that is often overlooked: when the dataset is small or the computational budget is constrained, simpler models such as SVM may still be preferable, while LSTM-based methods tend to perform better when larger datasets are available \cite{pallonetto2021}. This reinforces an important point from the broader review: model choice in STLF should depend on data conditions, operating requirements, and feature availability rather than on the assumption that deeper models are always better.
+
+\subsection{Cross-Cutting Trends and Remaining Gaps}
+When the reviewed studies are considered together, several broad trends become clear. First, the field has moved from linear, seasonality-driven forecasting toward nonlinear, weather-aware, and data-driven modeling. Second, the most successful recent studies rarely rely on historical load alone; they usually combine lagged demand with temporal indicators and weather features, and in some cases with price or other exogenous inputs \cite{Chen,Pinheiro,Mansouri,10320357}. Third, improvements in published forecasting accuracy increasingly depend on the entire experimental approach, including feature engineering, preprocessing, decomposition, and input selection, rather than on the forecasting algorithm in isolation \cite{vivas2020,khalil2022,zhang2021}.
+
+However, the review also reveals recurring weaknesses. Many studies are evaluated on a single dataset or region, limiting external validity. Benchmarking protocols are inconsistent, with different train-test splits, forecast horizons, error metrics, and preprocessing procedures \cite{vivas2020,khalil2022,habbak2023}. Weather variables are commonly included, but relatively few studies isolate and quantify their marginal contribution across different model families under the same conditions. In addition, although deep and hybrid models often achieve strong accuracy, they introduce higher computational cost and reduced interpretability, which can hinder operational adoption \cite{10630814,Eren,10320357}.
+
+Taken together, the literature suggests that the central research need is no longer simply to propose another forecasting model. What is needed instead is a unified and reproducible comparative framework that evaluates statistical, machine learning, and deep learning approaches under the same dataset, feature set, preprocessing approach, and performance metrics, while explicitly examining the role of weather information in shaping predictive performance. This gap provides a clear foundation for the present study. Besides, the synthesizing evidence suggests that model suitability follows a clear hierarchy based on forecasting horizon and dataset characteristics. The comparative synthesis of models, along with their strengths and limitations, is summarized in Table \ref{tab:model_synthesis}.
+
+\bigskip
+\section{Research Framework, Dataset Description, and Preliminary Analysis}
+\subsection{Research Framework Diagram For SLTF}
+Fig. \ref{fig:Framework} shows the proposed overall workflow for the a unified, weather-aware short-term load forecasting for this research.The framework begins with three main data sources: hourly meter readings, building-related information, and weather observations such as temperature, dew point, wind, pressure, cloud cover, and precipitation. These datasets are first combined using common identifiers, after which the merged data are cleaned and checked for quality to ensure consistency, correct alignment, and reliable hourly records.
+\begin{figure*}[!t]
+    \centering
+    \includegraphics[width=\textwidth]{Framework.pdf}
+    \caption{\small{Proposed Unified Weather-Aware STLF Framework.}}
+    \label{fig:Framework}
+\end{figure*}
+
+After integration, the data move into the feature engineering stage. At this point, the raw inputs are transformed into model-ready predictors through steps such as extracting time-based variables, applying a logarithmic transformation to the target, and encoding or scaling variables where necessary. Two input sets are then created for comparison. The first is a baseline feature set built from load history, calendar information, and building characteristics. The second adds meteorological variables to that baseline so that the influence of weather can be tested directly.
+
+These feature sets are then used across three groups of forecasting models: statistical methods, machine learning methods, and deep learning methods. By running all model families under both the baseline and weather-enhanced settings, the framework supports a fair and consistent comparison. Performance is then assessed using common error metrics and by examining how results vary across sites and time periods. Finally, the framework includes a weather-impact analysis to determine how much forecast accuracy improves when weather information is added, which model types are most sensitive to weather conditions, and what trade-offs exist among accuracy, cost, and interpretability. Overall, the framework is designed to produce a reproducible benchmark for short-term load forecasting while also making the role of weather in forecasting performance much clearer.
+
+\subsection{Dataset Description}
+
+This study utilizes the ASHRAE Great Energy Predictor III dataset, a large-scale real-world benchmark dataset for building-level energy forecasting. After integrating building metadata and weather information with the training dataset, the final merged dataset contains 20,216,100 observations and 16 variables.
+
+The dataset spans from January 1, 2016 to December 31, 2016 at hourly resolution, covering 1,449 unique buildings distributed across 16 distinct sites. Each observation corresponds to a specific building, meter type, and timestamp.
+
+The target variable is \texttt{meter\_reading}, representing energy consumption. Predictor variables include:
+
+\begin{itemize}
+    \item Building characteristics (primary use, square footage, year built, floor count)
+    \item Temporal features (hour, day of week, month, year)
+    \item Meteorological variables (air temperature, dew temperature, wind speed, sea level pressure, cloud coverage, precipitation depth)
+\end{itemize}
+
+The diversity of building types and climate conditions makes this dataset suitable for structured comparative forecasting and weather sensitivity analysis.
+
+\subsection{Data Integration and Preprocessing}
+
+The training dataset was merged with building metadata using \texttt{building\_id}, and subsequently merged with weather data using \texttt{site\_id} and \texttt{timestamp} as relational keys.
+
+Exploratory analysis revealed significant missingness in certain structural and environmental variables:
+
+\begin{itemize}
+    \item floor\_count: 82.65\% missing
+    \item year\_built: 59.99\% missing
+    \item cloud\_coverage: 43.66\% missing
+    \item precipitation depth (1hr): 18.54\% missing
+\end{itemize}
+
+Weather variables such as air temperature and dew temperature exhibited less than 0.5\% missing values.
+
+Temporal features were extracted from timestamps, including hour-of-day and day-of-week indicators. Due to extreme right-skewness of the target variable (skewness = 104.81), logarithmic transformation was applied to stabilize variance and improve model suitability.
+
+
+\subsection{Research Questions}
+This study is guided by the following research questions:
+\begin{enumerate}
+    \item How do different forecasting paradigms (statistical, machine learning, and deep learning models) compare under a unified preprocessing and evaluation framework for short-term electricity load forecasting?
+
+    \item To what extent does the integration of meteorological variables improve predictive performance?
+
+    \item Which models demonstrate higher sensitivity to weather variables under varying climatic conditions?
+\end{enumerate}
+
+\subsection{Preliminary Exploratory Findings}
+Exploratory analysis confirms strong temporal structure in electricity consumption. Average hourly load patterns reveal clear intra-day cyclic behavior, with peak demand observed in mid-afternoon hours. Weekly aggregation indicates elevated demand during mid-week relative to weekends.
+
+Correlation analysis between meter readings and meteorological variables indicates weak linear correlation between raw load and air temperature (r = -0.004). However, nonlinear scatter patterns suggest potential nonlinear relationships not captured by simple correlation coefficients.
+
+Weather variables such as air temperature and dew temperature exhibit strong intercorrelation (r = 0.75), indicating multicollinearity considerations for model development.
+
+These findings motivate a structured comparative modeling framework incorporating weather feature sensitivity analysis.
+
+\subsection{Exploratory Data Analysis and Visualization}
+Detailed exploratory data analysis is further carried out to understand the statistical structure of the merged training set, evaluate the behavior of the target variable, assess the spread and quality of the major predictors, and identify patterns that could materially affect model development. Because the forecasting framework in this study combines temporal, building, and weather information, the purpose of this stage was not only descriptive, but also diagnostic. In particular, the analysis was used to determine whether the raw variables exhibited skewness, sparsity, multicollinearity, anomalous periods, or strong cyclical behavior that would justify specific preprocessing choices before comparative model training.
+
+Fig. \ref{fig:target_distribution} shows the first and most important observation, which concerns the target variable, \textit{meter\_reading}. The raw distribution is extremely right-skewed, with a very large concentration of observations near zero and a long upper tail extending toward high-consumption events. This pattern is expected in a large, heterogeneous building dataset, where many hourly intervals correspond to low activity, inactive meters, or naturally small loads, while a smaller number of observations reflect high-demand periods. In its raw form, this distribution is not ideal for many predictive models because the large mass near zero and the extreme upper tail can dominate optimization and reduce sensitivity to the central region of the data. To improve the numerical behavior of the target, a logarithmic transformation using $\log(1+x)$ was examined. The transformed distribution is substantially more compressed, with the heavy tail reduced and the overall shape becoming more suitable for modeling. This result supports the earlier preprocessing decision to use a log-scale response during model development, while also indicating that zero readings should be examined carefully to distinguish genuine zero-consumption intervals from possible data-quality artifacts.
+\begin{figure}[!t]
+\centering
+\begin{subfigure}[t]{\columnwidth}
+    \centering
+    \includegraphics[width=\columnwidth]{raw_meter_reading_hist.png}
+    \caption{\small {Raw meter\_reading distribution.}}
+    \label{fig:raw_meter_reading_hist}
+\end{subfigure}
+\vspace{0.8ex}
+\begin{subfigure}[t]{\columnwidth}
+    \centering
+    \includegraphics[width=\columnwidth]{log_meter_reading_hist.png}
+\caption{\small {Log-transformed meter\_reading distribution.}}
+    \label{fig:log_meter_reading_hist}
+\end{subfigure}
+\caption{\small {Distribution of the target variable before and after logarithmic transformation. The raw target is heavily right-skewed with a large concentration of near-zero observations, while the $\log(1+x)$ transformation compresses the long upper tail and yields a more modeling-friendly distribution.}}
+\label{fig:target_distribution}
+\end{figure}
+
+In Fig. \ref{fig:key_numeric_distributions}, the numerical predictor distributions provide additional evidence that transformation and robust modeling will be necessary. The \textit{square\_feet} variable is also positively skewed, showing that the dataset contains many relatively small buildings and a much smaller number of very large facilities. This is typical of real building portfolios, but it also means that untransformed floor area can exert disproportionate influence in both statistical summaries and model fitting. A logarithmic transformation of building size produces a more balanced spread and makes differences among the majority of buildings easier to interpret. By contrast, \textit{air\_temperature} is much more regularly distributed, with observations concentrated in a moderate band and fewer extreme values at the tails. Together, these distributions show that the merged dataset includes variables with very different statistical shapes. Some predictors behave approximately continuously and smoothly, while others are highly skewed and require scale adjustment. From a modeling standpoint, this reinforces the need for feature-specific preprocessing rather than uniform treatment of all inputs.
+\begin{figure}[!t]
+\centering
+\begin{subfigure}[t]{\columnwidth}
+    \centering
+    \includegraphics[width=\columnwidth]{square_feet_hist.png}
+    \caption{\small {Square feet distribution.}}
+    \label{fig:square_feet_hist}
+\end{subfigure}
+\vspace{0.8ex}
+\begin{subfigure}[t]{\columnwidth}
+    \centering
+    \includegraphics[width=\columnwidth]{log_square_feet_hist.png}
+\caption{\small {Log-transformed square feet distribution.}}
+    \label{fig:log_square_feet_hist}
+\end{subfigure}
+\vspace{0.8ex}
+\begin{subfigure}[t]{\columnwidth}
+    \centering
+    \includegraphics[width=\columnwidth]{air_temperature_hist.png}
+\caption{\small {Air temperature distribution.}}
+    \label{fig:air_temperature_hist}
+\end{subfigure}
+\caption{\small {Distribution of selected numerical predictors. Building size is positively skewed in its raw form but becomes more balanced after logarithmic transformation, whereas air temperature exhibits a smoother and more regular spread over the observation period.}}
+\label{fig:key_numeric_distributions}
+\end{figure}
+
+Beyond the core predictors, Fig. \ref{fig:building_metadata}, the building metadata reveal meaningful structural diversity across the portfolio. The distribution of \textit{year\_built} suggests that buildings in the dataset were constructed across multiple development periods rather than belonging to a single architectural era. The \textit{floor\_count} distribution, although informative, should be interpreted more cautiously because that variable contains substantial missingness and therefore only reflects the subset of buildings with available records. Even so, the observed pattern indicates that low-rise buildings dominate the sample, while multi-story structures are comparatively less frequent. These structural characteristics matter because they point to underlying variation in occupancy profiles, thermal behavior, equipment intensity, and operational schedules, all of which can affect short-term load behavior.
+\begin{figure*}[!t]
+    \centering
+    \includegraphics[width=2\columnwidth]{building_metadata.png}
+    \caption{\small{Numeric data distribution of building data.}}
+    \label{fig:building_metadata}
+\end{figure*}
+
+The categorical analyses in Fig. \ref{fig:categorical_analyses} complement the numerical summaries by showing that the dataset is structurally imbalanced across building uses and sites. Certain \textit{primary\_use} categories account for a much larger share of observations than others, indicating that some types of facilities are far more strongly represented in the sample. A similar imbalance is visible across \textit{site\_id}, where some sites contribute many more records than others. This matters for two reasons. First, aggregate statistics can be dominated by high-frequency categories, potentially masking patterns in underrepresented building groups. Second, forecast performance may vary systematically by site and use type because climate conditions, occupancy schedules, and operating practices differ across categories. These distributions therefore justify later reporting of model results not only in aggregate form, but also with attention to site-level and category-level heterogeneity.
+\begin{figure*}[!t]
+    \centering
+    \includegraphics[width=2\columnwidth]{categorical_analyses.png}
+    \caption{\small{Categorical data distribution of building data.}}
+    \label{fig:categorical_analyses}
+\end{figure*}
+
+Fig. \ref{fig:corr_heatmap} shows the correlation analysis, which provides an initial linear view of the dependence structure among the numerical variables. At the aggregate level, \textit{meter\_reading} exhibits only weak linear correlation with individual predictors, which indicates that simple one-variable linear relationships are not sufficient to explain demand behavior. This is especially important for weather-sensitive forecasting, because weak marginal correlation does not imply irrelevance. Instead, it often indicates that the effect is conditional, nonlinear, or mediated by other variables such as time of day, season, site, or building type. The strongest relationships in the heatmap occur among the weather variables themselves, especially between \textit{air\_temperature} and \textit{dew\_temperature}. That pattern is physically sensible, but it also signals potential multicollinearity within the meteorological feature set. As a result, later model design should either account for correlated weather predictors explicitly or rely on methods that are robust to correlated inputs.
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\columnwidth]{correlation_heatmap.jpg}
+    \caption{\small{Correlation matrix of selected numerical variables. Aggregate linear relationships with meter\_reading are weak, while meteorological predictors such as air temperature and dew temperature exhibit stronger mutual correlation.}}
+    \label{fig:corr_heatmap}
+\end{figure}
+
+Temporal aggregation reveals some of the strongest structure in the entire dataset. The average hourly load profile in Fig.\ref{fig:hourly_load_profile} shows a clear intra-day cycle, with lower consumption in the early morning and higher demand emerging during the main daytime operating window. The strongest activity appears during late morning through afternoon hours, which is consistent with the working schedules of commercial, institutional, and mixed-use buildings. When the data are aggregated by day of week, a second pattern becomes visible: weekday consumption is generally higher than weekend consumption, with the largest averages concentrated in the middle of the week and the lowest values observed on Saturday and Sunday, as seen in Fig. \ref{fig:weekday_load_profile}. These two findings together indicate that a large portion of the forecasting signal is calendar-driven. They also validate the inclusion of hour-of-day, day-of-week, and weekend indicators in the modeling framework.
+
+The longer time-series view across the full year in Fig. \ref{fig:yearly_load_trend}, further shows that the dataset contains both recurring fluctuations and broader changes in aggregate demand level. This is useful because it confirms that the forecasting problem is not purely random at short horizons; rather, it is shaped by persistent temporal regularities superimposed on changing environmental and operational conditions. At the same time, the yearly trend plot suggests that the series is not perfectly stable throughout the observation period, which motivates closer anomaly inspection before final model training.
+\begin{figure}[!t]
+\centering
+\begin{subfigure}[t]{\columnwidth}
+    \centering
+    \includegraphics[width=\columnwidth]{hourly_load_profile.png}
+    \caption{\small {Average hourly load by hour of day.}}
+    \label{fig:hourly_load_profile}
+\end{subfigure}
+\vspace{0.8ex}
+\begin{subfigure}[t]{\columnwidth}
+    \centering
+    \includegraphics[width=\columnwidth]{weekday_load_profile.png}
+\caption{\small {Average load by day of week.}}
+    \label{fig:weekday_load_profile}
+\end{subfigure}
+\vspace{0.8ex}
+\begin{subfigure}[t]{\columnwidth}
+    \centering
+    \includegraphics[width=\columnwidth]{yearly_load_trend.png}
+\caption{\small {Average load over the full timestamp range.}}
+    \label{fig:yearly_load_trend}
+\end{subfigure}
+\caption{\small {Temporal load patterns at multiple aggregation levels. The data show clear intra-day and intra-week structure, with lower demand during early morning hours and weekends, as well as broader variation across the annual timeline.}}
+\label{fig:temporal_patterns}
+\end{figure}
+
+Fig. \ref{fig:weather_distribution_panel} shows the weather-related exploratory plots, indicating that the meteorological variables are generally plausible in range and behavior, with no obvious evidence of widespread physically impossible values in the broad distributions. However, the plots also reinforce an important data-quality point already identified during preprocessing: several weather variables contain meaningful missingness, and the effect of imputation should therefore be considered when interpreting their apparent smoothness. In other words, the weather distributions are informative for understanding the environmental context of the dataset, but they should not be read as purely raw measurements in every case. This is especially relevant for variables such as cloud coverage and precipitation depth, where missingness was nontrivial before treatment.
+\begin{figure*}[!t]
+    \centering
+    \includegraphics[width=2\columnwidth]{weather_distribution_panel.png}
+    \caption{Distribution of major weather variables used in the forecasting framework. The plot summarizes the range and shape of the meteorological inputs and helps identify variables whose apparent smoothness should be interpreted together with the earlier missing-value analysis.}
+    \label{fig:weather_distribution_panel}
+\end{figure*}
+
+Finally, Table \ref{tab:meter_type_summary} illustrates an exploratory comparison across meter categories, showing that the dataset is not homogeneous in the physical meaning of its response variable. The meter codes represent electricity, chilled water, steam, and hot water, and not every building contains all meter types. This means that the forecasting target captures multiple forms of energy service with potentially different temporal signatures, scales, and weather dependencies. The descriptive meter-wise summary, therefore, serves as an important reminder that model performance may vary not only by site or building type, but also by meter category itself. For this reason, meter should be retained as a meaningful predictor or stratification variable in later experiments, and evaluation should remain attentive to differences across energy-service classes.
+\begin{table*}[!t]
+\centering
+\caption{Meter Type Analysis Summary}
+\label{tab:meter_type_summary}
+\begin{tabular}{lccccccc}
+\hline
+\textbf{Meter Type} & \textbf{Meter ID} & \textbf{Total Readings} & \textbf{Mean Reading} & \textbf{Std Dev} & \textbf{Min} & \textbf{Max} & \textbf{Median} \\
+\hline
+Electricity    & 0 & 12060910 & NaN & 0.0 & 0.0 & 642.5 & 62.84375  \\
+Chilled Water  & 1 & 4182440  & NaN & 0.0 & 0.0 & 642.5 & 120.50000 \\
+Steam          & 2 & 2708713  & NaN & 0.0 & 0.0 & 642.5 & 257.75000 \\
+Hot Water      & 3 & 1264037  & NaN & 0.0 & 0.0 & 642.5 & 39.62500  \\
+\hline
+\end{tabular}
+\end{table*}
+
+Taken together, the exploratory analysis establishes four main conclusions. First, the forecasting target and some structural variables are strongly skewed, making transformation and robust preprocessing necessary. Second, the strongest predictive signals at the descriptive level appear to come from time structure and building heterogeneity rather than from simple linear weather effects alone. Third, the weather variables remain important, but their influence is likely nonlinear and entangled with other drivers, which supports the study's decision to compare multiple model families under a unified framework. Fourth, the presence of missingness, imputation, and the apparent July--October anomaly means that data quality must remain central to the interpretation of subsequent forecasting results. These findings provide a clear empirical foundation for the modeling phase and directly motivate the later comparison between baseline and weather-integrated feature sets.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\bibliographystyle{IEEEtran}
+\bibliography{References}
+
+\end{document}

@@ -1,0 +1,73 @@
+\subsection {Deep Learning Models for Power Load Forecasting}
+Deep Learning (DL) algorithms in the past few years have continued to emerge as indispensable tools for forecasting in the power and energy sector due to their ability to handle complex nonlinear functions and adapt to intricate influencing factors ~\cite {pallonetto2021},\cite{zhao2025short}. Deep Learning methods offer advantages over traditional statistical approaches. Several deep learning architectures have been widely implemented for electricity load and price forecasting; these include the Convolutional Neural Networks (CNN), Recurrent Neural Networks (RNN), Long Short-Term Memory Networks (LSTM), Gated Recurrent Unit (GRU) Models, DeepNet Architecture, Artificial Neural Network (ANN), and Multi-layer Perceptron Network (MLP), amongst others \cite{bedi2019deep,pallonetto2021,zhao2025short,ugbehe2025}. 
+
+
+The Convolutional Neural Network (CNN) is used to extract features from historical sequences for short-term electricity load forecasting. It can also capture complex nonlinear characteristics of electricity demand more effectively than traditional time-series methods such as ARIMA \cite{bedi2019deep,zhao2025short}. Recurrent Neural Networks (RNNs) can be applied to predict electricity demand for residential and commercial buildings. Deep RNNs have also been implemented to estimate demand at both regional aggregate and household disaggregate levels, because they often outperform shallow neural networks \cite{bedi2019deep}. A type of network used for multi-input, multi-output models of long-term electric power demand forecasting is the Long Short-Term Memory (LSTM) Network \cite{ugbehe2025}, Studies suggest that LSTM models perform better at electricity price prediction compared to other neural network-based models. 
+
+Similar to LSTMs, Gated Recurrent Unit (GRU) models are also noted for their effectiveness in electricity price predictions and often outperform other neural network models \cite{bedi2019deep}. To forecast short-term electricity load, a DeepNet architecture has been developed. The DeepNet architecture uses CNNs for feature extraction \cite{ugbehe2025}. Another DeepNet-based framework estimates short-term electricity load by considering variables such as residential behavior, weather conditions (temperature, humidity), and weekday \cite{zhao2025short,ugbehe2025,pallonetto2021}. Artificial Neural Networks (ANNs) are widely used for building intelligent models due to their reliability and effectiveness in handling data's hidden features \cite{bedi2019deep}. They have also been employed to predict electricity requirements for countries. ANNs are also found to perform better at input-output mapping than methods such as Multiple Linear Regression (MLR). Multi-layer Perceptron Networks (MLP) are implemented for electricity load and price forecasting \cite{bedi2019deep}. Prediction results from hybrid frameworks are often validated against MLP networks \cite{zhao2025short}. While these methods have had a great impact on forecasting, the need for sustained accuracy, enhanced flexibility, and reduced volatility has also led to the development of some hybrid and advanced methods \cite{pallonetto2021,ugbehe2025}. 
+
+ 
+
+\subsubsection {Hybrid and Advanced Approaches} 
+
+Hybrid Frameworks combine different techniques, such as Radial Neural Networks with stochastic search, to forecast short-term electricity demand \cite{zhao2025short}. These are often validated against other networks, such as MLPs, wavelet transforms, and echo-state networks \cite{bedi2019deep}. They are also sometimes integrated with statistical methods. Integrating traditional statistical methods with deep learning techniques can uncover trends in electricity demand from time-series data, which can enhance forecasting accuracy and adaptability to complex load variations. However, while combining regression models with deep learning can improve prediction accuracy, renewable energy power systems remain inherently complex and dynamic.
+
+\subsubsection {Challenges and Considerations}
+
+While deep learning offers considerable advantages, some of its challenges include Computational Complexity and Data dependency. The large computational time, cost, and high complexity of some deep learning methods can make it difficult to generalize them for different electricity demand prediction applications. In the same vein, Data Dependency has also posed a challenge. This is because load demand is highly dependent on factors like residential behavior.
+
+
+\subsubsection{Findings and Critiques} 
+\begin{itemize}
+    \item Prevalence of ML/AI and Hybrid Models: While statistical methods constituted 25 percent of reviewed articles, AI/ML and hybrid methodologies accounted for 5 percent and 2 percent, respectively, indicating a shift towards more advanced techniques. Hybrid models are particularly valued for their ability to combine strengths and achieve sustained accuracy.
+    \item Challenges with Statistical Methods: Their primary limitation is their inability to smoothly handle the non-linearity present in electricity demand data.
+    \item Challenges with Complex Models: Although powerful, some complex methods can suffer from large computational times and high complexity, making them difficult to generalize across different electricity demand prediction applications.
+    \item Feature Selection: Important factors influencing demand include weather conditions, GDP, historical demand data, and power capacity. The employment rate has been identified as a sensitive factor for electricity demand. While some studies consider outdoor temperature and date types, other factors like renewable energy production or occupancy profiles could also be considered. Advanced feature selection algorithms are introduced to explain nonlinear relationships.
+    \item Model Validation: Comparisons with other models (e.g., ANN vs. MLR, hybrid vs. MLP, wavelet transform, echo-state network) and external projections (e.g., Energy Information Administration, US) are used to validate prediction results.
+\end{itemize}
+
+\subsection{Summary and Conclusion}
+
+Machine Learning and deep learning approaches, including CNNs, RNNs, LSTMs, and ANNs, have transformed power and energy forecasting by effectively modeling complex nonlinear relationships. Hybrid models, combining deep learning with other techniques, are gaining prominence for their improved accuracy and robustness, despite challenges related to computational demands and data complexity.
+
+
+
+
+@article{bedi2019deep,
+  title={Deep learning framework to forecast electricity demand},
+  author={Bedi, Jatin and Toshniwal, Durga},
+  journal={Applied energy},
+  volume={238},
+  pages={1312--1326},
+  year={2019},
+  publisher={Elsevier}
+}
+
+
+@misc{pallonetto2021,
+  title={Forecast electricity demand in commercial building with machine learning models to enable demand response programs, Energy AI 7 (Jan. 2022), 100121},
+  author={Pallonetto, F and Jin, C and Mangina, E},
+  year={2021}
+}
+
+@article{ugbehe2025,
+  title={Electricity demand forecasting methodologies and applications: a review},
+  author={Ugbehe, Prosper O and Diemuodeke, Ogheneruona E and Aikhuele, Daniel O},
+  journal={Sustainable Energy Research},
+  volume={12},
+  number={1},
+  pages={19},
+  year={2025},
+  publisher={Springer}
+}
+
+@article{zhao2025short,
+  title={Short and long-term renewable electricity demand forecasting based on cnn-bi-gru model},
+  author={Zhao, Shuchen and Xu, Zhongjin and Zhu, Zhefan and Liang, Xiaoxiang and Zhang, Zecheng and Jiang, Ruxue},
+  journal={ICCK Transactions on Emerging Topics in Artificial Intelligence},
+  volume={2},
+  number={1},
+  pages={1--15},
+  year={2025},
+  publisher={Institute of Central Computation and Knowledge}
+}

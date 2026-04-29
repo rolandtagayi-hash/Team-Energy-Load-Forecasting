@@ -1,0 +1,66 @@
+Traditional statistical approaches have historically formed the backbone of short-term load forecasting (STLF). Before the widespread adoption of machine learning, utilities relied heavily on time-series models such as Autoregressive (AR), Moving Average (MA), Autoregressive Moving Average (ARMA), and Autoregressive Integrated Moving Average (ARIMA), including seasonal extensions such as Seasonal Autoregressive Integrated Moving Average (SARIMA). These models are grounded in statistical theory and assume that future electricity demand can be expressed as a linear function of past observations and stochastic error terms. Their interpretability, relatively low computational burden, and strong theoretical foundations made them attractive for operational grid forecasting, particularly in structured and moderately stationary environments.
+
+A recent systematic study by \cite{Pinheiro} explicitly frames STLF as a multi-level problem, from the system level down to low-voltage secondary substations, and proposes an interpretable step-by-step modeling workflow that incorporates historical load, calendar effects, and weather variables as structured predictors. Their analysis highlights that even when the final forecasting framework is not purely ARIMA/SARIMA, the classical explicit seasonal, cycle modeling, and carefully defined exogenous drivers still provide strong value for operational clarity and reproducibility.
+
+Recent STLF studies consistently show that weather introduces nonlinear effects, threshold behavior, and system shifts in cooling and heating dominance. In practice, this means performance gains depend not only on including temperature and humidity, but on representing their relationships in ways the model can learn robustly. \cite{Pinheiro} emphasizes structured variable modeling with weather and calendar factors to preserve interpretability while improving accuracy across grid levels, supporting the idea that weather integration requires careful design to avoid unstable relationships across locations and seasons.
+
+Recent empirical comparisons show where pure ARIMA baselines struggle. For example, \cite{Tarmanini} directly compares ARIMA against an ANN-based approach for load forecasting, using ARIMA as the statistical benchmark and evaluating error primarily through Mean Absolute Percentage Error (MAPE). Their results reinforce a common finding in contemporary STLF: linear statistical dependence can be competitive when patterns are stable, but accuracy can degrade when the signal is affected by nonlinear load changes and shifting conditions, which is frequently the case in real demand. 
+
+\cite{Mansouri} proposes a weather-sensitive forecasting framework based on dynamic mode decomposition with control (DMDc)—a reduced-order, data-driven dynamic modeling technique that is still closely aligned with the statistical modeling explicit dynamics, state evolution, and interpretable structure, while allowing exogenous influence through the control component. This is necessary because it shows how research is increasingly positioning classical statistical baselines alongside modern dynamic formulations that better tolerate weather-driven variability.
+
+On the modeling side, \cite{Mansouri}'s weather-sensitive framework is particularly relevant because it treats weather influence through a control-style mechanism (DMDc), aligning with the broader point that weather can act like an external forcing term on load dynamics. This perspective is helpful when you justify why conventional seasonal models can fail during abnormal conditions if the underlying dynamics shift, and seasonality alone is not enough.
+
+In parallel, other studies increasingly use deep learning models either to incorporate weather more effectively or even to jointly predict load and weather variables. \cite{Chen} presents a ResNet-LSTM approach that explicitly targets short-term load forecasting together with associated weather variable prediction, reinforcing the idea that weather and demand may be modeled as coupled signals rather than completely independent inputs. This supports why integrating meteorological features is now standard practice in competitive STLF studies—and why comparing across machine learning models is necessary.
+
+Recent reviews focused on short-term forecasting, which reinforces that weather integration is typically beneficial, but the magnitude of improvement depends on feature engineering, data alignment, hourly matching, and lag design, and the model’s ability to express nonlinearities issues that become central when you compare traditional statistical baselines to ML and LSTM models \cite{Eren}.
+
+@article{Pinheiro,
+  author  = {Pinheiro, Marco G. and Madeira, Sara C. and Francisco, Alexandre P.},
+  title   = {Short-term electricity load forecasting---A systematic approach from system level to secondary substations},
+  journal = {Applied Energy},
+  volume  = {332},
+  pages   = {120493},
+  year    = {2023},
+  month   = {Feb.},
+  doi     = {10.1016/j.apenergy.2022.120493}
+}
+
+@article{Mansouri,
+  author  = {Mansouri, Amir and Abolmasoumi, Amir H. and Ghadimi, Ali A.},
+  title   = {Weather sensitive short term load forecasting using dynamic mode decomposition with control},
+  journal = {Electric Power Systems Research},
+  volume  = {221},
+  pages   = {109387},
+  year    = {2023},
+  month   = {Aug.},
+  doi     = {10.1016/j.epsr.2023.109387}
+}
+
+@article{Tarmanini,
+  author  = {Tarmanini, Chafak and Sarma, Nur and Gezegin, Cenk and Ozgonenel, Okan},
+  title   = {Short term load forecasting based on ARIMA and ANN approaches},
+  journal = {Energy Reports},
+  year    = {2023},
+  month   = {Nov.},
+  doi     = {10.1016/j.egyr.2023.01.060}
+}
+
+@article{Chen,
+  author  = {Chen, Xinfang and Chen, Weiran and Dinavahi, Venkata A. and Liu, Yiqing and Feng, Jilin},
+  title   = {Short-Term Load Forecasting and Associated Weather Variables Prediction Using ResNet-LSTM Based Deep Learning},
+  journal = {IEEE Access},
+  year    = {2023},
+  month   = {Jan.},
+  doi     = {10.1109/ACCESS.2023.3236663}
+}
+
+@article{Eren,
+  author  = {Eren, Yavuz and K{\"u}{\c{c}}{\"u}kdemiral, {\.I}brahim},
+  title   = {A comprehensive review on deep learning approaches for short-term load forecasting},
+  journal = {Renewable and Sustainable Energy Reviews},
+  volume  = {189},
+  pages   = {114031},
+  year    = {2024},
+  month   = {Jan.},
+  doi     = {10.1016/j.rser.2023.114031}
+}

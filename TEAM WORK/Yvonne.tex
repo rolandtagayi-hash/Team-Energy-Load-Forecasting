@@ -1,0 +1,142 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{cite}
+\usepackage{placeins}
+\usepackage{dblfloatfix}
+\usepackage{graphicx}
+
+\title{Machine Learning Models for Power Load Forecasting: Literature Review}
+
+\author{\IEEEauthorblockN{Author Name}
+\IEEEauthorblockA{Department or Organization\\
+City, Country\\
+email@example.com}
+}
+
+\begin{document}
+\maketitle
+
+
+\section{Machine Learning Models for Power Load Forecasting}
+
+Recent research in power load forecasting has seen a considerable shift toward machine learning (ML) algorithms, largely  because they have exhibited the most reliable accuracy in predicting power demands~\cite{oluajayi2022}. Traditional statistical models frequently struggle to capture the intricate, nonlinear interactions between variables such as time and temperature. Machine learning techniques are preferred because of their ability to capture these nonlinear relationships; they can interpret calendar markers as external inputs, allowing them to better comprehend and predict power load demands~\cite{vivas2020}. Systematic data suggests that forecasting accuracy is heavily horizon-dependent. Shorter horizons often have a lower error, whereas medium to long-term forecasting is more uncertain and error-prone due to compounding behavioral and economic unpredictability~\cite{hammad2020}.
+
+Modern reviews underscore that forecasting performance is determined by an amalgamation of model type, feature engineering, and dataset properties. For example, a model designed for consistent grid-level demand may struggle with the fluctuating "noise" of household smart meters. Ultimately, success requires precisely matching the analytical tools and data preparation to the specific scale of the problem. Vivas, et al. \cite{vivas2020} emphasize that the majority of published studies remain site-specific, making cross-study generalization difficult and limiting reproducibility \cite{vivas2020}. Similarly, Azeem, et al. \cite{azeem2021} highlight that forecasting model accuracy varies significantly among sectors (residential, commercial, industrial) and generation modalities, especially when renewables are included into the supply system \cite{azeem2021} . This reinforces the conclusion that model superiority cannot be claimed universally without validation across diverse datasets.
+
+\subsection{Regression-Based and Econometric Models as Baselines}
+
+Although modern forecasting literature is dominated by newer Machine Learning algorithms, regression-based models are still extensively employed as baselines due to their interpretability and low computational cost. Recent research confirms that regression techniques are especially successful for long-term load forecasting (LTLF), where demand follows smoother seasonal and economic cycles \cite{hammad2020} . However, regression models perform poorly in short-term load forecasting (STLF) because they cannot effectively represent nonlinear weather-load interactions or abrupt behavioral fluctuations \cite{habbak2023,khalil2022} .
+
+In the findings of Zhang, et al. \cite{zhang2021}, regression models are commonly used in load forecasting situations, but they are typically outperformed when nonlinear learners are incorporated, particularly when the dataset incorporates complicated operational conditions and high-frequency sensor observations \cite{zhang2021}. In a similar vein, Vivas, et al. \cite{vivas2020} classify regression as a classical statistical/mathematical forecasting, highlighting that while regression is still relevant, it rarely achieves state-of-the-art performance when evaluated using MAPE across multiple geographic regions \cite{vivas2020}.
+
+Therefore, regression-based approaches are still most effective when interpretability is crucial and forecasting jobs require coarse temporal granularity (monthly/annual), but they are insufficient for high-resolution STLF applications.
+
+\subsection{Support Vector Regression (SVR) and Kernel-Based Learning}
+
+Support Vector Regression (SVR) continues to be widely adopted in load forecasting research due to its capacity to model nonlinear demand relationships through kernel transformations. Recent literature indicates that SVR is frequently used in STLF applications, particularly in cases where datasets are moderate in size and the feature space is carefully engineered (manually selected, cleaned, and transformed) \cite{khalil2022}. In microgrid forecasting contexts, SVR is often reported as a competitive benchmark due to its stability and strong performance under limited training data \cite{wazirali2023}.
+
+However, emerging evidence suggests that SVR performance deteriorates as dataset size and volatility grow. Zhang, et al. \cite{zhang2021} report that while SVR remains a popular choice for predicting building energy consumption, it is frequently surpassed by ensemble tree-based approaches such as Random Forest or XGBoost, particularly when the model is presented with larger, more complicated datasets \cite{zhang2021}. Furthermore, Azeem, et al. \cite{azeem2021}. establish that the SVR predicting error differs dramatically across generating modalities. SVR, in particular, performs poorly when a large number of renewable energy sources (such as solar or wind) are added to the mix, because renewable-driven intermittency results in nonstationary demand patterns that SVR struggles to process \cite{azeem2021}.
+
+A consistent theme is that SVR performs well in controlled STLF scenarios but lacks scalability and adaptability relative to modern ensemble-based ML frameworks.
+
+\subsection{Tree-Based Models: Decision Trees and Random Forests (RF)}
+
+Tree-based learning methods, particularly Random Forest (RF), continue to be among the most widely reported ML strategies for load forecasting due to their ability to capture nonlinear feature interactions without relying on strong parametric assumptions. Multiple literature evaluate RF as a high-performing and robust method for demand forecasting, particularly when climatic data and lagged load terms are included \cite{habbak2023,azeem2021}.
+
+The main advantage of RF over single decision trees is its resistance to overfitting, as well as its ability to quantify feature importance, which improves interpretability in operational planning. Zhang, et al. \cite{zhang2021} report RF as one of the most often utilized ML algorithms in building load prediction tasks, owing to its ability to balance accuracy with model transparency \cite{zhang2021}. Similarly, Vivas, et al. \cite{vivas2020} identify RF as one of the most frequently appearing ML models among studies reporting MAPE performance results, demonstrating its broad adoption across geographic forecasting applications \cite{vivas2020}.
+
+However, research suggests that boosting-based ensembles frequently outperform RF performance when the forecasting challenge needs fine-grained error reduction. This shows that RF is better described as a strong benchmark and practical deployment model, but not always the most accurate model in competitive forecasting situations \cite{habbak2023,zhang2021}.
+
+\subsection{Boosting Models: XGBoost and Gradient Boosting Machines}
+
+Boosting-based ensemble learning, namely gradient boosting decision trees, has emerged as the dominating algorithm in modern load forecasting research. According to multiple evaluations, boosting models outperform both linear regression and RF in STLF tasks because of their capacity to iteratively correct prediction residuals and capture high-order nonlinear relationships~\cite{azeem2021,habbak2023}.Habbak, et al. \cite{habbak2023} identified boosting algorithms as among the most effective AI-based forecasting families in smart grid situations, owing to their reliance on structured feature representations such as temperature, time-of-day, and weekday/holiday signals \cite{habbak2023}. Similarly, Zhang, et al. \cite{zhang2021} describe boosting-based approaches as highly effective in developing load prediction models, especially when datasets include high-dimensional metadata and engineered time-series lags \cite{zhang2021}. Vivas, et al. \cite{vivas2020} bolster this conclusion by reporting that ML models including exogenous variables regularly yield lower MAPE scores than models that depend solely on historical load values \cite{vivas2020}.
+
+However, boosting methods introduce challenges in hyperparameter sensitivity and reproducibility. Many studies optimize boosting architecture on single datasets, limiting the external validity of their results. Moreover, model interpretability remains weaker than regression baselines, despite the availability of feature importance tools.
+
+Overall, boosting models represent one of the strongest power load forecast approaches, particularly for utility-scale STLF with structured exogenous predictors.
+
+\subsection{Hybrid ML Systems and Optimization-Assisted Forecasting Pipelines}
+
+An emerging trend in forecasting research is the increasing use of hybrid ML pipelines that integrate feature selection, optimization algorithms, and decomposition strategies. Rather than relying solely on the predictive learner, studies frequently incorporate preprocessing stages such as clustering, noise reduction, or heuristic parameter tuning to enhance forecasting stability \cite{vivas2020,azeem2021}.
+
+Azeem, et al. \cite{azeem2021} emphasize that modern forecasting systems increasingly combine clustering, optimization, and machine learning to address sector-specific forecasting demands, particularly in industrial and isolated-grid forecasting settings where demand patterns vary significantly from conventional residential loads \cite{azeem2021}. In a similar vein, Zhang, et al. \cite{zhang2021} highlight that feature engineering and preprocessing are now treated as core determinants of forecasting performance rather than optional steps \cite{zhang2021}. This aligns with the systematic observations by Vivas, et al. \cite{vivas2020}, who argue that performance improvements in recent literature are often driven by the inclusion of exogenous variability sources rather than the learning model alone \cite{vivas2020}.
+
+Despite strong reported performance, hybrid models frequently suffer from limited transparency and weak generalizability. Many studies fail to assess if hybrid advantages hold up with distribution variations such as new seasons, policy changes, or renewable penetration. This suggests that hybrid forecasting systems, while powerful, are under-validated in deployment-representative situations.
+
+\subsection{Model Performance Reporting and Validation Limitations}
+
+Modern load forecasting studies predominantly report performance using MAPE, RMSE, and MAE, with MAPE being particularly common due to its comparability across datasets of different scales \cite{vivas2020}. However, publication quality issues remain substantial. Vivas, et al. \cite{vivas2020} explicitly emphasize that forecasting studies are frequently difficult to compare due to differences in time horizon, regional conditions, and dataset resolution \cite{vivas2020}. Likewise, Zhang, et al. \cite{zhang2021} highlight that the lack of standardized benchmarking datasets and inconsistent reporting of preprocessing steps reduces reproducibility and weakens cross-study synthesis \cite{zhang2021}.
+
+Another critical gap is the limited use of external validation. Many studies validate performance only through internal dataset splits, which can overestimate real-world deployment performance. This is particularly problematic for smart grid forecasting, where demand behavior shifts significantly under extreme weather events, renewable intermittency, and evolving economic conditions \cite{azeem2021,habbak2023}.
+
+Therefore, while modern ML forecasting accuracy appears improved relative to earlier approaches, the reliability of reported gains is often constrained by limited generalizability testing.
+
+\subsection{Comparative Synthesis of ML Model Suitability}
+
+Synthesizing evidence suggests that model suitability follows a clear hierarchy based on forecasting horizon and dataset characteristics. The comparative synthesis of models along with its strengths and limitations are summarized in Table~\ref{tab:model_synthesis}.
+\begin{table*}[htpb]
+\caption{Comparative Synthesis of ML Model Suitability in Power Load Forecasting}
+\label{tab:model_synthesis}
+\centering
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|p{2.5cm}|p{2.2cm}|p{3.2cm}|p{3cm}|p{3cm}|p{1.5cm}|}
+\hline
+\textbf{Model Category} &
+\textbf{Suitable Forecasting Horizon} &
+\textbf{Dataset Characteristics} &
+\textbf{Strengths} &
+\textbf{Limitations} &
+\textbf{Key Refs} \\
+\hline
+
+Regression-Based Models &
+Long-Term Load Forecasting (LTLF) &
+Aggregated demand; smoother seasonal/economic trends; limited nonlinear volatility &
+High interpretability; low computational cost; stable for coarse temporal granularity &
+Poor handling of nonlinear weather-load interactions; weak STLF performance &
+\cite{zhang2021,wazirali2023} \\
+\hline
+
+Support Vector Regression (SVR) &
+Short-Term Load Forecasting (STLF) &
+Moderate-sized datasets; engineered nonlinear features &
+Strong nonlinear modeling; stable under limited training data &
+Scalability issues; performance declines in large or volatile datasets; often outperformed by ensembles &
+\cite{azeem2021,zhang2021} \\
+\hline
+
+Random Forest (RF) &
+STLF and Medium-Term LF &
+Medium-scale datasets; structured meteorological and lagged features &
+Robust to overfitting; interpretable via feature importance; consistent performance &
+May be surpassed by boosting models in fine-grained error optimization &
+\cite{vivas2020,zhang2021} \\
+\hline
+
+Boosting Models (e.g., Gradient Boosting) &
+Primarily STLF &
+Large datasets; structured exogenous predictors (weather, calendar effects) &
+High predictive accuracy; strong nonlinear and high-order interaction modeling &
+Hyperparameter sensitivity; reduced interpretability; reproducibility challenges &
+\cite{habbak2023,wazirali2023} \\
+\hline
+
+Hybrid ML Pipelines &
+STLF (complex/volatile environments) &
+High-resolution, volatile, or renewable-integrated datasets &
+Improved accuracy through preprocessing, decomposition, and optimization integration &
+Dataset-specific gains; weak external validation; reduced transparency &
+\cite{vivas2020,azeem2021} \\
+\hline
+
+\end{tabular}
+\end{table*}
+
+\FloatBarrier
+\bibliographystyle{IEEEtran}
+\bibliography{ieee_references_table}
+
+\end{document}
