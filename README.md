@@ -110,8 +110,8 @@ A recommended repository organization is shown below.
 Team-Energy-Load-Forecasting/
 │
 ├── README.md
-├── Final Ashrae 1_2.ipynb
-├── Team_Energy_Load_Forecasting.pdf
+├── Team6_EnergyLoadForecasting_main.ipynb
+├── Team_6_Overleaf_Energy_Load_Forecasting_Rev2.pdf
 │
 ├── data/
 │   ├── train.csv
@@ -273,11 +273,11 @@ The table below summarizes the validation performance on the September–Decembe
 
 | Model | RMSE | RMSLE | MAE | R² | R²_log |
 |---|---:|---:|---:|---:|---:|
-| XGBoost | 43,105.5 | 1.2588 | 487.6 | 0.0051 | 0.6364 |
-| LightGBM | 43,118.7 | 1.2628 | 464.4 | 0.0045 | 0.6341 |
-| Linear Regression | 43,217.2 | 1.8282 | 570.1 | -0.0001 | 0.2330 |
-| Ridge Regression | 43,218.9 | 2.3453 | 613.2 | -0.0002 | -0.2622 |
-| Lasso Regression | 43,218.9 | 2.3413 | 612.8 | -0.0002 | -0.2579 |
+| XGBoost | 3,251 | 1.0391 | 226.7 | 0.24089 | 0.7516 |
+| LightGBM | 3,243 | 1.0281  | 224.2 | 0.24479 | 0.7568 |
+| Linear Regression | 3,739 | 1.8268 | 412.6 | -0.00383 | 0.2322 |
+| Ridge Regression | 3,739 | 1.8268 | 412.6 | -0.00383 | 0.2322 |
+| Lasso Regression | 3,739 | 1.8384 | 414.9 | -0.00411 | 0.2224 |
 
 ### Main Result
 
